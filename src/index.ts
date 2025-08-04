@@ -1,17 +1,18 @@
 import * as PIXI from "pixi.js";
-import symbolImage from "../assets/SYM04.png";
 
+import { MainApp } from "./MainApp";
 const app = new PIXI.Application({
-  width: 800,
-  height: 600,
+  width: window.innerWidth,
+  height: window.innerHeight,
+
   backgroundColor: 0x1099bb,
 });
 document.body.appendChild(app.view as HTMLCanvasElement);
 
-const texture = PIXI.Texture.from(symbolImage);
-const sprite = new PIXI.Sprite(texture);
-sprite.x = 300;
-sprite.y = 200;
-sprite.scale.set(0.5);
+const mainApp = new MainApp();
 
-app.stage.addChild(sprite);
+app.stage.addChild(mainApp);
+
+window.addEventListener("resize", () => {
+  app.renderer.resize(window.innerWidth, window.innerHeight);
+});
