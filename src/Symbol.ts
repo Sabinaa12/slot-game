@@ -27,6 +27,11 @@ export class Symbol extends PIXI.Container {
 
     this.addChild(this._winSprite);
     this.addChild(this._symSprite);
+    this._symSprite.anchor.set(0.5);
+    this._winSprite.anchor.set(0.5);
+
+    this.x = 270;
+    this.y = 170;
   }
 
   /**
