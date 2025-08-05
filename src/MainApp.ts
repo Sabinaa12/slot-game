@@ -1,6 +1,7 @@
 import { Reel } from "./Reel";
 import { Container } from "pixi.js";
 import { ReelFrame } from "./ReelFrame";
+import { SpinButton } from "./SpinButton";
 
 /**
  * Main cladd of slot game
@@ -8,7 +9,7 @@ import { ReelFrame } from "./ReelFrame";
 export class MainApp extends Container {
   private _reel!: Reel;
   private _reelFrame!: ReelFrame;
-
+  private _spinButton!: SpinButton;
   constructor() {
     super();
     this.init();
@@ -18,6 +19,7 @@ export class MainApp extends Container {
   private init(): void {
     this.createReelFrame();
     this.createReel();
+    this.createSpinButton();
   }
 
   /**
@@ -26,6 +28,7 @@ export class MainApp extends Container {
   private createReel(): void {
     this._reel = new Reel();
     this.addChild(this._reel);
+    this._reel.x = 270;
   }
 
   /**
@@ -34,5 +37,16 @@ export class MainApp extends Container {
   private createReelFrame(): void {
     this._reelFrame = new ReelFrame();
     this.addChild(this._reelFrame);
+  }
+
+  /**
+   * Creates and adds the spin button to the stage.
+   */
+  private createSpinButton(): void {
+    this._spinButton = new SpinButton();
+    this.addChild(this._spinButton);
+    SpinButton.pressedButtonHandler = () => {
+      this._reel.startSpin();
+    };
   }
 }
