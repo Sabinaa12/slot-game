@@ -20,18 +20,23 @@ export class Symbol extends PIXI.Container {
    */
   private createSprites(texture: PIXI.Texture): void {
     const winTexture = PIXI.Texture.from(winSymbolImage);
+    const symbolSize: number = 120;
 
     this._symSprite = new PIXI.Sprite(texture);
     this._winSprite = new PIXI.Sprite(winTexture);
     this._winSprite.visible = false;
 
+    [this._symSprite, this._winSprite].forEach((sprite) => {
+      sprite.width = symbolSize;
+      sprite.height = symbolSize;
+      sprite.anchor.set(0.5);
+    });
+
+    this.width = symbolSize;
+    this.height = symbolSize;
+
     this.addChild(this._winSprite);
     this.addChild(this._symSprite);
-    this._symSprite.anchor.set(0.5);
-    this._winSprite.anchor.set(0.5);
-
-    this.x = 270;
-    this.y = 170;
   }
 
   /**
