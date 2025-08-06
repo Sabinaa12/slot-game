@@ -8,12 +8,14 @@ import winSymbolImage from "../assets/WIN_BG.png";
 export class Symbol extends PIXI.Container {
   private _winSprite!: PIXI.Sprite;
   private _symSprite!: PIXI.Sprite;
-  private _tween: gsap.core.Tween | null = null;
+  private _winAnimationTween: gsap.core.Tween | null = null;
+  private _symbolName: string = "";
 
   constructor(texture: PIXI.Texture) {
     super();
     this.createSprites(texture);
   }
+
   /**
    * Initializes the main and win sprites.
    * @param texture
@@ -25,6 +27,9 @@ export class Symbol extends PIXI.Container {
     this._symSprite = new PIXI.Sprite(texture);
     this._winSprite = new PIXI.Sprite(winTexture);
     this._winSprite.visible = false;
+
+    this._symbolName =
+      this._symSprite.texture.textureCacheIds?.[0] ?? "unknown";
 
     [this._symSprite, this._winSprite].forEach((sprite) => {
       sprite.width = symbolSize;
@@ -40,13 +45,20 @@ export class Symbol extends PIXI.Container {
   }
 
   /**
+   * Returns the symbol's name
+   */
+  public getSymbolName(): string {
+    return this._symbolName;
+  }
+
+  /**
    *  Plays the win animation by scaling the symbol
    */
   public playSymbolAnimation(): void {
     this._winSprite.visible = true;
-    this._tween = gsap.to(this.scale, {
-      x: 1.2,
-      y: 1.2,
+    this._winAnimationTween = gsap.to(this.scale, {
+      x: 1.1,
+      y: 1.1,
       duration: 1,
       ease: "power1.inOut",
       yoyo: true,
@@ -56,11 +68,11 @@ export class Symbol extends PIXI.Container {
 
   /**
    *  Stops the win animation and hides the win sprite.
-   * */
+   */
   public stopSymbolAnimation(): void {
-    if (this._tween) {
-      this._tween.kill();
-      this._tween = null;
+    if (this._winAnimationTween) {
+      this._winAnimationTween.kill();
+      this._winAnimationTween = null;
     }
     this._winSprite.visible = false;
   }
