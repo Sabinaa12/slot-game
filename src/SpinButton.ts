@@ -22,7 +22,10 @@ export class SpinButton extends Container {
     this._buttonSprite = new Sprite(Texture.from(playButton));
     this._buttonSprite.eventMode = "static";
     this._buttonSprite.cursor = "pointer";
-    this.position.set(500, 200);
+    this.position.set(900, 290);
+    this._buttonSprite.scale.x = 0.7;
+    this._buttonSprite.scale.y = 0.7;
+
     this._buttonSprite.anchor.set(0.5);
 
     this.addChild(this._buttonSprite);
@@ -40,8 +43,8 @@ export class SpinButton extends Container {
    */
   public onPress(): void {
     gsap.to(this._buttonSprite.scale, {
-      x: 0.9,
-      y: 0.9,
+      x: 0.6,
+      y: 0.6,
       duration: 0.1,
       ease: "power1.out",
       yoyo: true,

@@ -16,7 +16,6 @@ export class ReelFrame extends PIXI.Sprite {
    */
   private setupFrame(): void {
     this.pivot.set(this.width / 2, this.height / 2);
-    this.x = 200;
-    this.y = 100;
+    this.position.set(600, 100);
   }
 }

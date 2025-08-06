@@ -5,7 +5,7 @@ const app = new PIXI.Application({
   width: window.innerWidth,
   height: window.innerHeight,
 
-  backgroundColor: 0x1099bb,
+  backgroundColor: 0xa7b2ef,
 });
 document.body.appendChild(app.view as HTMLCanvasElement);
 
