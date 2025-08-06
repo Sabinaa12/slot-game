@@ -40,7 +40,7 @@ export class Reel extends PIXI.Container {
   private createMask(): void {
     this._maskGraphics = new PIXI.Graphics();
     this._maskGraphics.beginFill(0xffffff);
-    this._maskGraphics.drawRect(0, 105, 1000, 384.5);
+    this._maskGraphics.drawRect(0, 105, 1000, 384);
     this._maskGraphics.endFill();
     this.mask = this._maskGraphics;
   }
@@ -149,9 +149,6 @@ export class Reel extends PIXI.Container {
       this._spinTween.progress(1);
       this._spinTween.kill();
       this._spinTween = null;
-      this.spinInProgress = false;
-      this.resetSymbols();
-      Reel.stopSpinHandler();
     }
   }
 

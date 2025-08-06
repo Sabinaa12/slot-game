@@ -37,7 +37,7 @@ export class MainApp extends Container {
   private createReel(): void {
     this._reel = new Reel();
     this.addChild(this._reel);
-    this._reel.x = 270;
+    this._reel.x = 670;
     Reel.stopSpinHandler = this.handleStopSpin.bind(this);
   }
   /**
@@ -68,17 +68,16 @@ export class MainApp extends Container {
    * Handles the logic for when the spin button is pressed
    */
   private handleSpinButtonPress(): void {
-    this._winDisplay.updateBalance(0);
+    this._winDisplay.updateWin(0);
 
     if (this._reel.spinInProgress) {
       this._reel.stopSpin();
     } else {
       this._reel.startSpin();
-    }
-
-    if (this._currentBalance > 0) {
-      this._balanceDisplay.updateBalance(--this._currentBalance);
-      if (this._currentBalance === 0) this._spinButton.disable();
+      if (this._currentBalance > 0) {
+        this._balanceDisplay.updateBalance(--this._currentBalance);
+        if (this._currentBalance === 0) this._spinButton.disable();
+      }
     }
   }
 
@@ -127,7 +126,7 @@ export class MainApp extends Container {
         const winAmount = indexes.length;
         this._currentBalance += winAmount;
         this._balanceDisplay.updateBalance(this._currentBalance);
-        this._winDisplay.updateBalance(winAmount);
+        this._winDisplay.updateWin(winAmount);
       }
     });
   }
