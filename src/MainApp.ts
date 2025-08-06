@@ -2,14 +2,17 @@ import { Reel } from "./Reel";
 import { Container } from "pixi.js";
 import { ReelFrame } from "./ReelFrame";
 import { SpinButton } from "./SpinButton";
+import { BalanceDisplay } from "./BalanceDisplay";
 
 /**
- * Main cladd of slot game
+ * Main class of slot game
  */
 export class MainApp extends Container {
   private _reel!: Reel;
   private _reelFrame!: ReelFrame;
   private _spinButton!: SpinButton;
+  private _balanceDisplay!: BalanceDisplay;
+  private _currentBalance: number = 100;
   constructor() {
     super();
     this.init();
@@ -20,6 +23,7 @@ export class MainApp extends Container {
     this.createReelFrame();
     this.createReel();
     this.createSpinButton();
+    this.createBalanceDisplay();
   }
 
   /**
@@ -47,6 +51,16 @@ export class MainApp extends Container {
     this.addChild(this._spinButton);
     SpinButton.pressedButtonHandler = () => {
       this._reel.startSpin();
+      if (this._currentBalance > 0)
+        this._balanceDisplay.updateBalance(--this._currentBalance);
     };
+  }
+
+  /**
+   * Creates the balance display
+   */
+  private createBalanceDisplay(): void {
+    this._balanceDisplay = new BalanceDisplay();
+    this.addChild(this._balanceDisplay);
   }
 }
