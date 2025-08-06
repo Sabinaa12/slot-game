@@ -17,8 +17,13 @@ export class Reel extends PIXI.Container {
   private _symbols: Symbol[] = [];
   private _maskGraphics!: PIXI.Graphics;
   private _initialSymbols: Symbol[] = [];
+  private _spinTween: gsap.core.Timeline | null = null;
+
   private readonly _symbSpacing: number = 65;
   private readonly _symbSize: number = 120;
+
+  public spinInProgress: boolean = false;
+  public static stopSpinHandler: Function;
 
   constructor() {
     super();
@@ -35,7 +40,7 @@ export class Reel extends PIXI.Container {
   private createMask(): void {
     this._maskGraphics = new PIXI.Graphics();
     this._maskGraphics.beginFill(0xffffff);
-    this._maskGraphics.drawRect(0, 108, 1000, 380);
+    this._maskGraphics.drawRect(0, 105, 1000, 384.5);
     this._maskGraphics.endFill();
     this.mask = this._maskGraphics;
   }
@@ -45,12 +50,13 @@ export class Reel extends PIXI.Container {
    */
 
   private addSymbols(): void {
-    this.initSandwich();
-    this.virtualReels();
+    this.createInitialSymbols();
+    this.createVirtualSymbols();
   }
 
   /**
    * Creates a random symbol with a specific vertical position.
+   * @param y - vertical coordinate
    */
   private createRandomSymbol(y: number): Symbol {
     const index = Math.floor(Math.random() * this._symbolTextures.length);
@@ -63,7 +69,7 @@ export class Reel extends PIXI.Container {
   /**
    * Creates the first 5 symbols, positioned on the reel
    */
-  private initSandwich(): void {
+  private createInitialSymbols(): void {
     for (let i = 0; i < 5; i++) {
       const symbol = this.createRandomSymbol(
         548 - i * (this._symbSize / 2 + this._symbSpacing)
@@ -77,7 +83,7 @@ export class Reel extends PIXI.Container {
    *
    * Generates additional symbols for the spinning animation.
    */
-  private virtualReels(): void {
+  private createVirtualSymbols(): void {
     const baseY = this._initialSymbols[0].y;
     for (let i = 5; i < 20; i++) {
       const symbol = this.createRandomSymbol(
@@ -101,27 +107,58 @@ export class Reel extends PIXI.Container {
       symbol.y = 548 - i * (symbol.height / 2 + 65);
       this.addChild(symbol);
     });
-    this.virtualReels();
+    this.createVirtualSymbols();
 
     this.y = 0;
   }
 
   /**
-   * Triggers the reel spin animation using GSAP Timeline:
+   * Starts the spinning animation using GSAP timeline.
    */
   public startSpin(): void {
-    var tl = gsap.timeline();
-    tl.to(this, {
-      y: this.y - 50,
-      duration: 0.3,
-      ease: "power1.out",
-    }).to(this, {
-      y: 1875,
-      duration: 2.7,
-      ease: "power1.out",
-      onComplete: () => {
-        this.resetSymbols();
-      },
-    });
+    this._initialSymbols.forEach((symbol) => symbol.stopSymbolAnimation());
+
+    if (this._spinTween?.isActive()) return;
+
+    this._spinTween = gsap.timeline();
+    this.spinInProgress = true;
+    this._spinTween
+      .to(this, {
+        y: this.y - 50,
+        duration: 0.3,
+        ease: "power1.out",
+      })
+      .to(this, {
+        y: 1875,
+        duration: 2.7,
+        ease: "power1.out",
+
+        onComplete: () => {
+          this.spinInProgress = false;
+          this.resetSymbols();
+          Reel.stopSpinHandler();
+        },
+      });
+  }
+
+  /**
+   * Stops the spinning animation
+   */
+  public stopSpin(): void {
+    if (this._spinTween) {
+      this._spinTween.progress(1);
+      this._spinTween.kill();
+      this._spinTween = null;
+      this.spinInProgress = false;
+      this.resetSymbols();
+      Reel.stopSpinHandler();
+    }
+  }
+
+  /**
+   * Returns the current initial symbols on the reel.
+   */
+  public getInitialSandwichSymbols(): Symbol[] {
+    return this._initialSymbols;
   }
 }
