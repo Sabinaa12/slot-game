@@ -1,0 +1,43 @@
+# One-Reel Slot Game
+
+# Description
+
+This is a simple slot game with one reel displaying three visible symbols at a time.
+
+# Gameplay rules:
+
+- The reel spins showing three symbols.
+
+Winning conditions:
+
+- If 2 symbols of the same kind appear, the player wins double their bet.
+
+- If 3 symbols of the same kind appear, the player wins triple their bet.
+
+- The user starts with a balance of 100 dollars.
+
+- Each spin costs 1 dollar.
+
+- If the user’s balance is 0 dollars, the spin button is disabled.
+
+- A quick stop feature allows the user to click the spin button again while the reel is spinning, causing an immediate stop — but all 3 previous symbols must leave the screen before stopping.
+
+# Tehnologies
+
+pixi.js - version: 7.2.4 gsap - version 3.13.0 typescript - version 5.1.3 webpack - version 5.88.2
+
+# Setup
+
+To run this project, install it locally using npm:
+
+npm install
+npm run build
+npm run start
+
+# Online playable game link:
+
+https://sabinaa12.github.io/slot-game/
+
+# Game screenshot
+
+<img width="1257" height="816" alt="image" src="https://github.com/user-attachments/assets/20d41566-6cbe-4221-9510-320911ad6082" />
