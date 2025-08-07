@@ -1,12 +1,11 @@
 import * as PIXI from "pixi.js";
-import reelFrame from "../assets/REEL.png";
 
 /**
  * ReelFrame class
  */
 export class ReelFrame extends PIXI.Sprite {
   constructor() {
-    const texture = PIXI.Texture.from(reelFrame);
+    const texture = PIXI.Assets.get("assets/REEL.png");
     super(texture);
     this.setupFrame();
   }
@@ -16,6 +15,6 @@ export class ReelFrame extends PIXI.Sprite {
    */
   private setupFrame(): void {
     this.pivot.set(this.width / 2, this.height / 2);
-    this.position.set(600, 100);
+    this.position.set(669, 297);
   }
 }

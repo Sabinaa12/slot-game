@@ -1,10 +1,4 @@
 import * as PIXI from "pixi.js";
-import sym01 from "../assets/SYM01.png";
-import sym02 from "../assets/SYM02.png";
-import sym03 from "../assets/SYM03.png";
-import sym04 from "../assets/SYM04.png";
-import sym05 from "../assets/SYM05.png";
-import sym06 from "../assets/SYM06.png";
 
 import { Symbol } from "./Symbol";
 import { gsap } from "gsap";
@@ -13,7 +7,14 @@ import { gsap } from "gsap";
  * Reel class – represents a single reel with symbols.
  */
 export class Reel extends PIXI.Container {
-  private readonly _symbolTextures = [sym01, sym02, sym03, sym04, sym05, sym06];
+  private readonly _symbolTextures: PIXI.Texture[] = [
+    PIXI.Assets.get("assets/SYM01.png"),
+    PIXI.Assets.get("assets/SYM02.png"),
+    PIXI.Assets.get("assets/SYM03.png"),
+    PIXI.Assets.get("assets/SYM04.png"),
+    PIXI.Assets.get("assets/SYM05.png"),
+    PIXI.Assets.get("assets/SYM06.png"),
+  ];
   private _symbols: Symbol[] = [];
   private _maskGraphics!: PIXI.Graphics;
   private _initialSymbols: Symbol[] = [];
@@ -60,7 +61,7 @@ export class Reel extends PIXI.Container {
    */
   private createRandomSymbol(y: number): Symbol {
     const index = Math.floor(Math.random() * this._symbolTextures.length);
-    const texture = PIXI.Texture.from(this._symbolTextures[index]);
+    const texture = this._symbolTextures[index];
     const symbol = new Symbol(texture);
     symbol.y = y;
     return symbol;
