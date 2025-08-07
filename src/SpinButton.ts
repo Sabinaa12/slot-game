@@ -1,6 +1,5 @@
-import { Sprite, Container, Texture } from "pixi.js";
-import playButton from "../assets/PLAY.png";
-import disabledButton from "../assets/PLAY_DISABLED.png";
+import { Sprite, Container, Texture, Assets } from "pixi.js";
+
 import { gsap } from "gsap";
 
 /**
@@ -19,7 +18,7 @@ export class SpinButton extends Container {
    * Creates the play button
    */
   private initButton(): void {
-    this._buttonSprite = new Sprite(Texture.from(playButton));
+    this._buttonSprite = new Sprite(Assets.get("assets/PLAY.png"));
     this._buttonSprite.eventMode = "static";
     this._buttonSprite.cursor = "pointer";
     this.position.set(900, 290);
@@ -58,7 +57,7 @@ export class SpinButton extends Container {
    * Disables the button
    */
   public disable(): void {
-    this._buttonSprite.texture = Texture.from(disabledButton);
+    this._buttonSprite.texture = Assets.get("assets/PLAY_DISABLED.png");
     this.interactive = false;
     this._buttonSprite.eventMode = "none";
     this._buttonSprite.cursor = "default";
@@ -68,7 +67,7 @@ export class SpinButton extends Container {
    * Enables the button
    */
   public enable(): void {
-    this._buttonSprite.texture = Texture.from(playButton);
+    this._buttonSprite.texture = Assets.get("assets/PLAY.png");
     this.interactive = true;
     this._buttonSprite.eventMode = "static";
     this._buttonSprite.cursor = "pointer";

@@ -1,6 +1,5 @@
 import * as PIXI from "pixi.js";
 import { gsap } from "gsap";
-import winSymbolImage from "../assets/WIN_BG.png";
 
 /**
  * Symbol class
@@ -21,7 +20,7 @@ export class Symbol extends PIXI.Container {
    * @param texture
    */
   private createSprites(texture: PIXI.Texture): void {
-    const winTexture = PIXI.Texture.from(winSymbolImage);
+    const winTexture = PIXI.Assets.get("assets/WIN_BG.png");
     const symbolSize: number = 120;
 
     this._symSprite = new PIXI.Sprite(texture);
@@ -59,7 +58,7 @@ export class Symbol extends PIXI.Container {
     this._winAnimationTween = gsap.to(this.scale, {
       x: 1.1,
       y: 1.1,
-      duration: 1,
+      duration: 0.6,
       ease: "power1.inOut",
       yoyo: true,
       repeat: -1,
