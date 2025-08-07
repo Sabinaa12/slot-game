@@ -41,6 +41,7 @@ export class SpinButton extends Container {
    * Plays button press animation and triggers handler
    */
   public onPress(): void {
+    this.disable(false);
     gsap.to(this._buttonSprite.scale, {
       x: 0.6,
       y: 0.6,
@@ -48,16 +49,21 @@ export class SpinButton extends Container {
       ease: "power1.out",
       yoyo: true,
       repeat: 1,
+      onComplete: () => {
+        this.enable(false);
+        SpinButton.pressedButtonHandler();
+      },
     });
-
-    SpinButton.pressedButtonHandler();
   }
 
   /**
    * Disables the button
    */
-  public disable(): void {
-    this._buttonSprite.texture = Assets.get("assets/PLAY_DISABLED.png");
+  public disable(updateTexture: boolean = true): void {
+    if (updateTexture) {
+      this._buttonSprite.texture = Assets.get("assets/PLAY_DISABLED.png");
+    }
+
     this.interactive = false;
     this._buttonSprite.eventMode = "none";
     this._buttonSprite.cursor = "default";
@@ -66,8 +72,10 @@ export class SpinButton extends Container {
   /**
    * Enables the button
    */
-  public enable(): void {
-    this._buttonSprite.texture = Assets.get("assets/PLAY.png");
+  public enable(updateTexture: boolean = true): void {
+    if (updateTexture) {
+      this._buttonSprite.texture = Assets.get("assets/PLAY.png");
+    }
     this.interactive = true;
     this._buttonSprite.eventMode = "static";
     this._buttonSprite.cursor = "pointer";
