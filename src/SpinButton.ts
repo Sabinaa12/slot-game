@@ -42,8 +42,8 @@ export class SpinButton extends Container {
    */
   public onPress(): void {
     gsap.to(this._buttonSprite.scale, {
-      x: 0.65,
-      y: 0.65,
+      x: 0.6,
+      y: 0.6,
       duration: 0.1,
       ease: "power1.out",
       yoyo: true,

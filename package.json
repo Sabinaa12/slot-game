@@ -1,6 +1,11 @@
 {
     "name": "slot-game",
     "version": "1.0.0",
+    "author": "Purcarea Andreea-Sabina",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sabinaa12/slot-game.git"
+    },
     "scripts": {
         "start": "webpack serve --open",
         "build": "webpack"
